@@ -2,7 +2,7 @@ from rest_framework import viewsets, permissions
 from apps.accounts.permissions import IsStaffOrReadOnly, ResourcePermission, user_has_resource_permission
 from .models import StudentProfile, TeacherProfile, ParentProfile, StudentParent
 from .serializers import (
-    StudentProfileSerializer, TeacherProfileSerializer,
+    StudentProfileSerializer, StudentCreateSerializer, TeacherProfileSerializer,
     ParentProfileSerializer, StudentParentSerializer
 )
 
@@ -12,6 +12,11 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
     resource_name = 'students'
     permission_classes = [ResourcePermission]
     search_fields = ['first_name', 'last_name', 'national_id', 'phone_number']
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return StudentCreateSerializer
+        return StudentProfileSerializer
 
     def get_queryset(self):
         user = self.request.user

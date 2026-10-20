@@ -14,6 +14,76 @@ class StudentParentSerializer(serializers.ModelSerializer):
         fields = ['student', 'student_name', 'parent', 'parent_name', 'parent_phone']
 
 
+class StudentCreateSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    password = serializers.CharField(write_only=True, required=False, allow_blank=True, style={'input_type': 'password'})
+    email = serializers.EmailField(write_only=True, required=False, allow_blank=True)
+    section_id = serializers.IntegerField(write_only=True, required=False, allow_null=True)
+    academic_year_id = serializers.IntegerField(write_only=True, required=False, allow_null=True)
+
+    class Meta:
+        model = StudentProfile
+        fields = [
+            'id', 'user', 'username', 'password', 'email', 'first_name', 'last_name',
+            'date_of_birth', 'enrollment_date', 'gender', 'blood_type',
+            'national_id', 'address', 'phone_number', 'medical_conditions',
+            'section_id', 'academic_year_id'
+        ]
+        read_only_fields = ['id', 'user']
+
+    def create(self, validated_data):
+        from apps.accounts.models import Role, User
+        from apps.academics.models import Enrollment, Section, AcademicYear
+        from django.db import transaction
+
+        username = validated_data.pop('username', None)
+        password = validated_data.pop('password', None)
+        email = validated_data.pop('email', '')
+        section_id = validated_data.pop('section_id', None)
+        academic_year_id = validated_data.pop('academic_year_id', None)
+
+        with transaction.atomic():
+            if not username:
+                base_username = f"{validated_data.get('first_name', 'student')}.{validated_data.get('last_name', 'new')}".lower().replace(' ', '')
+                candidate = base_username
+                count = 1
+                while User.objects.filter(username=candidate).exists():
+                    candidate = f"{base_username}{count}"
+                    count += 1
+                username = candidate
+
+            if not password:
+                password = 'student123'
+
+            student_role = Role.objects.filter(name__iexact='student').first()
+            user = User(
+                username=username,
+                email=email or f"{username}@school.edu",
+                role=student_role,
+                is_active=True
+            )
+            user.set_password(password)
+            user.save()
+
+            student = StudentProfile.objects.create(user=user, **validated_data)
+
+            if section_id:
+                ay = None
+                if academic_year_id:
+                    ay = AcademicYear.objects.filter(pk=academic_year_id).first()
+                if not ay:
+                    ay = AcademicYear.objects.filter(is_active=True).first() or AcademicYear.objects.first()
+
+                sec = Section.objects.filter(pk=section_id).first()
+                if sec and ay:
+                    Enrollment.objects.get_or_create(student=student, section=sec, academic_year=ay)
+
+            return student
+
+    def to_representation(self, instance):
+        return StudentProfileSerializer(instance, context=self.context).data
+
+
 class StudentProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
     email = serializers.CharField(source='user.email', read_only=True)

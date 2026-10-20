@@ -2,12 +2,22 @@ import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useQuery } from '@tanstack/react-query';
 import { apiClient } from '../../api/client';
-import { Search, HeartPulse } from 'lucide-react';
+import { Search, HeartPulse, UserPlus } from 'lucide-react';
+import { useAuth } from '../../contexts/AuthContext';
+import { CreateStudentModal } from './CreateStudentModal';
 
 export const StudentsPage: React.FC = () => {
   const { t } = useTranslation();
+  const { user, hasPermission } = useAuth();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedStudent, setSelectedStudent] = useState<any | null>(null);
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+
+  const canCreateStudent =
+    !user?.role ||
+    user?.role === 'admin' ||
+    user?.role === 'super_admin' ||
+    hasPermission('students', 'create');
 
   const { data: students, isLoading } = useQuery({
     queryKey: ['students-list', searchTerm],
@@ -18,6 +28,12 @@ export const StudentsPage: React.FC = () => {
       return res.data?.results || res.data || [];
     },
   });
+
+  const studentList: any[] = Array.isArray(students)
+    ? students
+    : Array.isArray((students as any)?.results)
+    ? (students as any).results
+    : [];
 
   return (
     <div className="space-y-6">
@@ -31,6 +47,16 @@ export const StudentsPage: React.FC = () => {
             {t('students.subtitle')}
           </p>
         </div>
+
+        {canCreateStudent && (
+          <button
+            onClick={() => setIsCreateModalOpen(true)}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/25 transition duration-150 transform active:scale-95 shrink-0"
+          >
+            <UserPlus className="w-4 h-4" />
+            <span>{t('students.addStudent')}</span>
+          </button>
+        )}
       </div>
 
       {/* Filter / Search Bar */}
@@ -46,7 +72,7 @@ export const StudentsPage: React.FC = () => {
           />
         </div>
         <span className="text-xs font-semibold text-slate-500">
-          {students?.length || 0} {t('students.fullName')}
+          {studentList.length} {t('students.fullName')}
         </span>
       </div>
 
@@ -56,7 +82,7 @@ export const StudentsPage: React.FC = () => {
           <div className="py-16 text-center text-sm text-slate-400">
             {t('common.loading')}
           </div>
-        ) : students?.length === 0 ? (
+        ) : studentList.length === 0 ? (
           <div className="py-16 text-center text-sm text-slate-400">
             {t('students.noStudents')}
           </div>
@@ -74,7 +100,7 @@ export const StudentsPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                {students.map((student: any) => (
+                {studentList.map((student: any) => (
                   <tr
                     key={student.id}
                     className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition"
@@ -200,6 +226,12 @@ export const StudentsPage: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Modern Create Student Modal */}
+      <CreateStudentModal
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+      />
     </div>
   );
 };
