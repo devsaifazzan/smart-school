@@ -1,7 +1,9 @@
-import argon2
-from django.contrib.auth.hashers import BasePasswordHasher
+try:
+    import argon2
+    ph = argon2.PasswordHasher()
+except ImportError:
+    ph = None
 
-ph = argon2.PasswordHasher()
 
 class RawArgon2PasswordHasher(BasePasswordHasher):
     algorithm = "argon2"
