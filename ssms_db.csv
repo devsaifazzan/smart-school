@@ -1,0 +1,116 @@
+"table_schema","table_name","column_number","column_name","data_type","is_nullable","column_default"
+"public","academic_years",1,"id","integer","NO","nextval('academic_years_id_seq'::regclass)"
+"public","academic_years",2,"name","character varying","NO",NULL
+"public","academic_years",3,"start_date","date","NO",NULL
+"public","academic_years",4,"end_date","date","NO",NULL
+"public","academic_years",5,"is_active","boolean","NO",NULL
+"public","ai_student_notes",1,"id","integer","NO","nextval('ai_student_notes_id_seq'::regclass)"
+"public","ai_student_notes",2,"student_id","integer","NO",NULL
+"public","ai_student_notes",3,"generated_at","timestamp without time zone","NO","now()"
+"public","ai_student_notes",4,"note_content","text","NO",NULL
+"public","ai_student_notes",5,"insights_json","json","YES",NULL
+"public","ai_student_notes",6,"requires_intervention","boolean","NO",NULL
+"public","attendance",1,"id","integer","NO","nextval('attendance_id_seq'::regclass)"
+"public","attendance",2,"student_id","integer","NO",NULL
+"public","attendance",3,"timetable_id","integer","NO",NULL
+"public","attendance",4,"date","date","NO",NULL
+"public","attendance",5,"status","USER-DEFINED","NO",NULL
+"public","attendance",6,"remarks","text","YES",NULL
+"public","class_levels",1,"id","integer","NO","nextval('class_levels_id_seq'::regclass)"
+"public","class_levels",2,"name","character varying","NO",NULL
+"public","enrollments",1,"id","integer","NO","nextval('enrollments_id_seq'::regclass)"
+"public","enrollments",2,"student_id","integer","NO",NULL
+"public","enrollments",3,"section_id","integer","NO",NULL
+"public","enrollments",4,"academic_year_id","integer","NO",NULL
+"public","exam_types",1,"id","integer","NO","nextval('exam_types_id_seq'::regclass)"
+"public","exam_types",2,"name","character varying","NO",NULL
+"public","exam_types",3,"weight_percentage","double precision","NO",NULL
+"public","fee_structures",1,"id","integer","NO","nextval('fee_structures_id_seq'::regclass)"
+"public","fee_structures",2,"fee_type_id","integer","NO",NULL
+"public","fee_structures",3,"class_level_id","integer","NO",NULL
+"public","fee_structures",4,"academic_year_id","integer","NO",NULL
+"public","fee_structures",5,"amount","double precision","NO",NULL
+"public","fee_types",1,"id","integer","NO","nextval('fee_types_id_seq'::regclass)"
+"public","fee_types",2,"name","character varying","NO",NULL
+"public","fee_types",3,"description","text","YES",NULL
+"public","marks",1,"id","integer","NO","nextval('marks_id_seq'::regclass)"
+"public","marks",2,"student_id","integer","NO",NULL
+"public","marks",3,"subject_id","integer","NO",NULL
+"public","marks",4,"exam_type_id","integer","NO",NULL
+"public","marks",5,"term_id","integer","NO",NULL
+"public","marks",6,"score","double precision","NO",NULL
+"public","marks",7,"max_score","double precision","NO",NULL
+"public","parent_profiles",1,"id","integer","NO","nextval('parent_profiles_id_seq'::regclass)"
+"public","parent_profiles",2,"user_id","integer","NO",NULL
+"public","parent_profiles",3,"first_name","character varying","NO",NULL
+"public","parent_profiles",4,"last_name","character varying","NO",NULL
+"public","parent_profiles",5,"phone_number","character varying","YES",NULL
+"public","payments",1,"id","integer","NO","nextval('payments_id_seq'::regclass)"
+"public","payments",2,"invoice_id","integer","NO",NULL
+"public","payments",3,"amount_paid","double precision","NO",NULL
+"public","payments",4,"payment_date","timestamp without time zone","NO","now()"
+"public","payments",5,"payment_method","character varying","YES",NULL
+"public","payments",6,"transaction_id","character varying","YES",NULL
+"public","role_permissions",1,"id","integer","NO","nextval('role_permissions_id_seq'::regclass)"
+"public","role_permissions",2,"role_id","integer","NO",NULL
+"public","role_permissions",3,"resource_name","character varying","NO",NULL
+"public","role_permissions",4,"can_create","boolean","NO",NULL
+"public","role_permissions",5,"can_read","boolean","NO",NULL
+"public","role_permissions",6,"can_update","boolean","NO",NULL
+"public","role_permissions",7,"can_delete","boolean","NO",NULL
+"public","roles",1,"id","integer","NO","nextval('roles_id_seq'::regclass)"
+"public","roles",2,"name","character varying","NO",NULL
+"public","roles",3,"description","text","YES",NULL
+"public","sections",1,"id","integer","NO","nextval('sections_id_seq'::regclass)"
+"public","sections",2,"class_level_id","integer","NO",NULL
+"public","sections",3,"name","character varying","NO",NULL
+"public","sections",4,"capacity","integer","NO",NULL
+"public","student_invoices",1,"id","integer","NO","nextval('student_invoices_id_seq'::regclass)"
+"public","student_invoices",2,"student_id","integer","NO",NULL
+"public","student_invoices",3,"fee_structure_id","integer","NO",NULL
+"public","student_invoices",4,"issue_date","date","NO",NULL
+"public","student_invoices",5,"due_date","date","NO",NULL
+"public","student_invoices",6,"amount_due","double precision","NO",NULL
+"public","student_invoices",7,"status","character varying","NO",NULL
+"public","student_parent",1,"student_id","integer","NO",NULL
+"public","student_parent",2,"parent_id","integer","NO",NULL
+"public","student_profiles",1,"id","integer","NO","nextval('student_profiles_id_seq'::regclass)"
+"public","student_profiles",2,"user_id","integer","NO",NULL
+"public","student_profiles",3,"first_name","character varying","NO",NULL
+"public","student_profiles",4,"last_name","character varying","NO",NULL
+"public","student_profiles",5,"date_of_birth","date","YES",NULL
+"public","student_profiles",6,"enrollment_date","date","NO","CURRENT_DATE"
+"public","student_profiles",7,"gender","character varying","YES",NULL
+"public","student_profiles",8,"blood_type","character varying","YES",NULL
+"public","student_profiles",9,"national_id","character varying","YES",NULL
+"public","student_profiles",10,"address","text","YES",NULL
+"public","student_profiles",11,"phone_number","character varying","YES",NULL
+"public","student_profiles",12,"medical_conditions","text","YES",NULL
+"public","subjects",1,"id","integer","NO","nextval('subjects_id_seq'::regclass)"
+"public","subjects",2,"name","character varying","NO",NULL
+"public","subjects",3,"code","character varying","NO",NULL
+"public","teacher_profiles",1,"id","integer","NO","nextval('teacher_profiles_id_seq'::regclass)"
+"public","teacher_profiles",2,"user_id","integer","NO",NULL
+"public","teacher_profiles",3,"first_name","character varying","NO",NULL
+"public","teacher_profiles",4,"last_name","character varying","NO",NULL
+"public","teacher_profiles",5,"hire_date","date","NO","CURRENT_DATE"
+"public","terms",1,"id","integer","NO","nextval('terms_id_seq'::regclass)"
+"public","terms",2,"academic_year_id","integer","NO",NULL
+"public","terms",3,"name","character varying","NO",NULL
+"public","terms",4,"start_date","date","NO",NULL
+"public","terms",5,"end_date","date","NO",NULL
+"public","timetables",1,"id","integer","NO","nextval('timetables_id_seq'::regclass)"
+"public","timetables",2,"section_id","integer","NO",NULL
+"public","timetables",3,"subject_id","integer","NO",NULL
+"public","timetables",4,"teacher_id","integer","NO",NULL
+"public","timetables",5,"day_of_week","character varying","NO",NULL
+"public","timetables",6,"start_time","time without time zone","NO",NULL
+"public","timetables",7,"end_time","time without time zone","NO",NULL
+"public","timetables",8,"classroom","character varying","YES",NULL
+"public","users",1,"id","integer","NO","nextval('users_id_seq'::regclass)"
+"public","users",2,"username","character varying","NO",NULL
+"public","users",3,"email","character varying","NO",NULL
+"public","users",4,"hashed_password","character varying","NO",NULL
+"public","users",5,"role_id","integer","NO",NULL
+"public","users",6,"is_active","boolean","NO",NULL
+"public","users",7,"created_at","timestamp without time zone","NO","now()"
