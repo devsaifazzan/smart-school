@@ -77,22 +77,39 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 # Database Configuration:
 # Connect directly to local PostgreSQL server (port 5433 or 5432)
-DB_NAME = os.getenv('POSTGRES_DB', 'ssms_db')
-DB_USER = os.getenv('POSTGRES_USER', 'postgres')
-DB_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'postgres')
-DB_HOST = os.getenv('POSTGRES_HOST', 'localhost')
-DB_PORT = os.getenv('POSTGRES_PORT', '5433')
+import urllib.parse
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER': DB_USER,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOST,
-        'PORT': DB_PORT,
+DATABASE_URL = os.getenv('DATABASE_URL')
+if DATABASE_URL:
+    # Support postgres:// and postgresql:// connection strings
+    parsed_db = urllib.parse.urlparse(DATABASE_URL)
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': parsed_db.path.lstrip('/'),
+            'USER': parsed_db.username,
+            'PASSWORD': parsed_db.password,
+            'HOST': parsed_db.hostname,
+            'PORT': parsed_db.port or '5432',
+        }
     }
-}
+else:
+    DB_NAME = os.getenv('POSTGRES_DB', 'ssms_db')
+    DB_USER = os.getenv('POSTGRES_USER', 'postgres')
+    DB_PASSWORD = os.getenv('POSTGRES_PASSWORD', 'postgres')
+    DB_HOST = os.getenv('POSTGRES_HOST', 'localhost')
+    DB_PORT = os.getenv('POSTGRES_PORT', '5433')
+
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': DB_NAME,
+            'USER': DB_USER,
+            'PASSWORD': DB_PASSWORD,
+            'HOST': DB_HOST,
+            'PORT': DB_PORT,
+        }
+    }
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator', 'OPTIONS': {'min_length': 4}},
