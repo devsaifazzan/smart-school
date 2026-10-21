@@ -218,31 +218,32 @@ export const CreateStudentModal: React.FC<CreateStudentModalProps> = ({ isOpen, 
   const selectedSection = sectionsList.find((s: any) => String(s.id) === String(formData.section_id));
 
   return (
-    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/60 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 animate-in fade-in duration-200">
-      <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200/80 dark:border-slate-800 max-w-3xl w-full overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 overflow-y-auto bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-2.5 sm:p-6 animate-in fade-in duration-200">
+      <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200/80 dark:border-slate-800 max-w-3xl w-full overflow-hidden flex flex-col max-h-[95vh] sm:max-h-[92vh]">
         {/* Header */}
-        <div className="relative px-6 py-5 bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 text-white flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="w-11 h-11 rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-inner">
-              <UserPlus className="w-6 h-6 text-white" />
+        <div className="relative px-4 sm:px-6 py-3.5 sm:py-5 bg-gradient-to-r from-indigo-600 via-indigo-700 to-violet-700 text-white flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2.5 sm:gap-3 overflow-hidden">
+            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl sm:rounded-2xl bg-white/15 backdrop-blur-md flex items-center justify-center shadow-inner shrink-0">
+              <UserPlus className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
             </div>
-            <div>
-              <h2 className="text-xl font-black tracking-tight flex items-center gap-2">
-                {isRTL ? 'تسجيل طالب جديد' : 'Register New Student'}
-                <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-white/20 text-white">
+            <div className="min-w-0">
+              <h2 className="text-base sm:text-xl font-black tracking-tight flex items-center gap-1.5 sm:gap-2 truncate">
+                <span className="truncate">{isRTL ? 'تسجيل طالب جديد' : 'Register New Student'}</span>
+                <span className="hidden xs:inline text-[9px] sm:text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-white/20 text-white shrink-0">
                   {isRTL ? 'نظام القيد الذكي' : 'Smart Enrollment'}
                 </span>
               </h2>
-              <p className="text-xs text-indigo-100 mt-0.5">
+              <p className="text-[11px] sm:text-xs text-indigo-100 mt-0.5 truncate max-w-sm sm:max-w-none">
                 {isRTL
                   ? 'إنشاء الملف الأكاديمي، تعيين الشعبة، وتوليد حساب البوابة'
-                  : 'Create academic profile, assign section, and configure portal credentials'}
+                  : 'Create academic profile, assign section, and configure credentials'}
               </p>
             </div>
           </div>
           <button
             onClick={handleClose}
-            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition"
+            className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition shrink-0 active:scale-95"
+            aria-label="Close dialog"
           >
             <X className="w-4 h-4" />
           </button>
@@ -339,12 +340,12 @@ export const CreateStudentModal: React.FC<CreateStudentModalProps> = ({ isOpen, 
         ) : (
           <form onSubmit={handleSubmit} className="flex-1 flex flex-col overflow-hidden">
             {/* Step Navigation Tabs */}
-            <div className="px-6 pt-4 pb-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between">
-              <div className="flex items-center gap-2 sm:gap-4">
+            <div className="px-3.5 sm:px-6 pt-3 pb-2 border-b border-slate-100 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-900/50 flex items-center justify-between overflow-x-auto no-scrollbar">
+              <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
                 <button
                   type="button"
                   onClick={() => setStep(1)}
-                  className={`flex items-center gap-2 pb-2 text-xs font-bold border-b-2 transition ${
+                  className={`flex items-center gap-1.5 sm:gap-2 pb-2 text-xs font-bold border-b-2 transition shrink-0 ${
                     step === 1
                       ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
                       : 'border-transparent text-slate-400 hover:text-slate-600'
@@ -356,12 +357,12 @@ export const CreateStudentModal: React.FC<CreateStudentModalProps> = ({ isOpen, 
                   <span>{isRTL ? 'البيانات الشخصية' : 'Personal Info'}</span>
                 </button>
 
-                <ChevronRight className="w-3.5 h-3.5 text-slate-300 rtl:rotate-180" />
+                <ChevronRight className="w-3.5 h-3.5 text-slate-300 rtl:rotate-180 shrink-0" />
 
                 <button
                   type="button"
                   onClick={() => setStep(2)}
-                  className={`flex items-center gap-2 pb-2 text-xs font-bold border-b-2 transition ${
+                  className={`flex items-center gap-1.5 sm:gap-2 pb-2 text-xs font-bold border-b-2 transition shrink-0 ${
                     step === 2
                       ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
                       : 'border-transparent text-slate-400 hover:text-slate-600'
@@ -373,12 +374,12 @@ export const CreateStudentModal: React.FC<CreateStudentModalProps> = ({ isOpen, 
                   <span>{isRTL ? 'التسكين والقيد' : 'Academic Placement'}</span>
                 </button>
 
-                <ChevronRight className="w-3.5 h-3.5 text-slate-300 rtl:rotate-180" />
+                <ChevronRight className="w-3.5 h-3.5 text-slate-300 rtl:rotate-180 shrink-0" />
 
                 <button
                   type="button"
                   onClick={() => setStep(3)}
-                  className={`flex items-center gap-2 pb-2 text-xs font-bold border-b-2 transition ${
+                  className={`flex items-center gap-1.5 sm:gap-2 pb-2 text-xs font-bold border-b-2 transition shrink-0 ${
                     step === 3
                       ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
                       : 'border-transparent text-slate-400 hover:text-slate-600'
@@ -387,14 +388,14 @@ export const CreateStudentModal: React.FC<CreateStudentModalProps> = ({ isOpen, 
                   <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[11px] ${step === 3 ? 'bg-indigo-600 text-white' : 'bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300'}`}>
                     3
                   </span>
-                  <span>{isRTL ? 'حساب البوابة والتواصل' : 'Portal & Contact'}</span>
+                  <span>{isRTL ? 'حساب البوابة' : 'Portal Account'}</span>
                 </button>
               </div>
 
               {/* Student Card Mini Preview Badge */}
-              <div className="hidden md:flex items-center gap-2 text-xs bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-xl text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-900/50">
+              <div className="hidden lg:flex items-center gap-2 text-xs bg-indigo-50 dark:bg-indigo-950/50 px-2.5 py-1 rounded-xl text-indigo-700 dark:text-indigo-300 border border-indigo-200/50 dark:border-indigo-900/50 shrink-0">
                 <Sparkles className="w-3.5 h-3.5" />
-                <span className="font-semibold">
+                <span className="font-semibold truncate max-w-[120px]">
                   {formData.first_name || formData.last_name
                     ? `${formData.first_name} ${formData.last_name}`
                     : (isRTL ? 'معاينة الطالب' : 'Student Preview')}
@@ -706,25 +707,25 @@ export const CreateStudentModal: React.FC<CreateStudentModalProps> = ({ isOpen, 
             </div>
 
             {/* Modal Footer Controls */}
-            <div className="px-6 py-4 bg-slate-50 dark:bg-slate-900/80 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+            <div className="px-3.5 sm:px-6 py-3 sm:py-4 bg-slate-50 dark:bg-slate-900/80 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between gap-2">
               <div>
                 {step > 1 && (
                   <button
                     type="button"
                     onClick={() => setStep((s) => (s - 1) as any)}
-                    className="flex items-center gap-1.5 px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 transition"
+                    className="flex items-center gap-1 sm:gap-1.5 px-3 sm:px-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 active:scale-95 transition"
                   >
-                    <ChevronLeft className="w-4 h-4 rtl:rotate-180" />
+                    <ChevronLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 rtl:rotate-180" />
                     <span>{isRTL ? 'السابق' : 'Previous'}</span>
                   </button>
                 )}
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <button
                   type="button"
                   onClick={handleClose}
-                  className="px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition"
+                  className="px-3 sm:px-4 py-2 rounded-xl text-xs font-bold text-slate-500 hover:text-slate-800 dark:hover:text-slate-200 transition"
                 >
                   {isRTL ? 'إلغاء' : 'Cancel'}
                 </button>
@@ -744,26 +745,26 @@ export const CreateStudentModal: React.FC<CreateStudentModalProps> = ({ isOpen, 
                       setErrorMessage(null);
                       setStep((s) => (s + 1) as any);
                     }}
-                    className="flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-600/30 transition"
+                    className="flex items-center gap-1 sm:gap-1.5 px-4 sm:px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold shadow-md shadow-indigo-600/30 active:scale-95 transition"
                   >
                     <span>{isRTL ? 'التالي' : 'Next'}</span>
-                    <ChevronRight className="w-4 h-4 rtl:rotate-180" />
+                    <ChevronRight className="w-3.5 h-3.5 sm:w-4 sm:h-4 rtl:rotate-180" />
                   </button>
                 ) : (
                   <button
                     type="submit"
                     disabled={createMutation.isPending}
-                    className="flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 disabled:opacity-50 transition"
+                    className="flex items-center gap-1.5 sm:gap-2 px-4 sm:px-6 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white text-xs font-bold shadow-lg shadow-indigo-600/30 disabled:opacity-50 active:scale-95 transition"
                   >
                     {createMutation.isPending ? (
                       <>
-                        <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        <div className="w-3.5 h-3.5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
                         <span>{isRTL ? 'جاري التسجيل...' : 'Registering...'}</span>
                       </>
                     ) : (
                       <>
                         <CheckCircle2 className="w-4 h-4" />
-                        <span>{isRTL ? 'تأكيد وحفظ الطالب' : 'Confirm & Register Student'}</span>
+                        <span>{isRTL ? 'تأكيد وحفظ الطالب' : 'Confirm & Register'}</span>
                       </>
                     )}
                   </button>

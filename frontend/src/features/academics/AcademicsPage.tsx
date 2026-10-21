@@ -162,15 +162,15 @@ export const AcademicsPage: React.FC = () => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
-            <GraduationCap className="w-7 h-7 text-indigo-600 dark:text-indigo-400" />
-            {t('academics.title', 'Academic Structure & Curriculum')}
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 sm:gap-2.5">
+            <GraduationCap className="w-6 h-6 sm:w-7 sm:h-7 text-indigo-600 dark:text-indigo-400 shrink-0" />
+            <span>{t('academics.title', 'Academic Structure & Curriculum')}</span>
           </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1">
             {t(
               'academics.subtitle',
               'Manage academic calendars, semesters, grade levels, class sections, and registered subjects'
@@ -179,11 +179,11 @@ export const AcademicsPage: React.FC = () => {
         </div>
 
         {/* Action Button depending on active tab */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 w-full sm:w-auto">
           {activeTab === 'years' && (
             <button
               onClick={() => setShowAddYearModal(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-md shadow-indigo-600/20 transition-all active:scale-95"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs sm:text-sm shadow-md shadow-indigo-600/20 transition-all active:scale-95 w-full sm:w-auto"
             >
               <Plus className="w-4 h-4" />
               <span>{t('academics.addYear', 'Add School Year')}</span>
@@ -192,7 +192,7 @@ export const AcademicsPage: React.FC = () => {
           {activeTab === 'levels' && (
             <button
               onClick={() => setShowAddSectionModal(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-md shadow-indigo-600/20 transition-all active:scale-95"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs sm:text-sm shadow-md shadow-indigo-600/20 transition-all active:scale-95 w-full sm:w-auto"
             >
               <Plus className="w-4 h-4" />
               <span>Add Class Section</span>
@@ -201,7 +201,7 @@ export const AcademicsPage: React.FC = () => {
           {activeTab === 'subjects' && (
             <button
               onClick={() => setShowAddSubjectModal(true)}
-              className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-sm shadow-md shadow-indigo-600/20 transition-all active:scale-95"
+              className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-medium text-xs sm:text-sm shadow-md shadow-indigo-600/20 transition-all active:scale-95 w-full sm:w-auto"
             >
               <Plus className="w-4 h-4" />
               <span>{t('academics.addSubject', 'Add Subject')}</span>
@@ -213,26 +213,26 @@ export const AcademicsPage: React.FC = () => {
       {/* Notifications */}
       {notification && (
         <div
-          className={`p-4 rounded-xl text-sm flex items-center gap-3 animate-fadeIn border ${
+          className={`p-3.5 sm:p-4 rounded-xl text-xs sm:text-sm flex items-center gap-2.5 sm:gap-3 animate-fadeIn border ${
             notification.type === 'success'
               ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-600 dark:text-emerald-400'
               : 'bg-rose-500/10 border-rose-500/30 text-rose-600 dark:text-rose-400'
           }`}
         >
           {notification.type === 'success' ? (
-            <CheckCircle2 className="w-5 h-5 shrink-0" />
+            <CheckCircle2 className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
           ) : (
-            <AlertCircle className="w-5 h-5 shrink-0" />
+            <AlertCircle className="w-4 h-4 sm:w-5 sm:h-5 shrink-0" />
           )}
           <span>{notification.message}</span>
         </div>
       )}
 
-      {/* Tabs */}
-      <div className="flex border-b border-slate-200 dark:border-slate-800 gap-6">
+      {/* Tabs - Horizontally scrollable on mobile */}
+      <div className="flex items-center border-b border-slate-200 dark:border-slate-800 gap-2 sm:gap-6 overflow-x-auto no-scrollbar pb-0.5">
         <button
           onClick={() => setActiveTab('years')}
-          className={`pb-3 text-sm font-bold flex items-center gap-2 border-b-2 transition ${
+          className={`pb-2.5 sm:pb-3 px-3 sm:px-4 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition shrink-0 whitespace-nowrap ${
             activeTab === 'years'
               ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
               : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
@@ -240,14 +240,14 @@ export const AcademicsPage: React.FC = () => {
         >
           <Calendar className="w-4 h-4" />
           <span>{t('academics.yearsTab', 'Academic Years')}</span>
-          <span className="px-2 py-0.5 rounded-full text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          <span className="px-2 py-0.5 rounded-full text-[11px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
             {years.length}
           </span>
         </button>
 
         <button
           onClick={() => setActiveTab('levels')}
-          className={`pb-3 text-sm font-bold flex items-center gap-2 border-b-2 transition ${
+          className={`pb-2.5 sm:pb-3 px-3 sm:px-4 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition shrink-0 whitespace-nowrap ${
             activeTab === 'levels'
               ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
               : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
@@ -255,14 +255,14 @@ export const AcademicsPage: React.FC = () => {
         >
           <Layers className="w-4 h-4" />
           <span>{t('academics.levelsTab', 'Class Levels & Sections')}</span>
-          <span className="px-2 py-0.5 rounded-full text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          <span className="px-2 py-0.5 rounded-full text-[11px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
             {classLevels.length}
           </span>
         </button>
 
         <button
           onClick={() => setActiveTab('subjects')}
-          className={`pb-3 text-sm font-bold flex items-center gap-2 border-b-2 transition ${
+          className={`pb-2.5 sm:pb-3 px-3 sm:px-4 text-xs sm:text-sm font-bold flex items-center gap-2 border-b-2 transition shrink-0 whitespace-nowrap ${
             activeTab === 'subjects'
               ? 'border-indigo-600 text-indigo-600 dark:text-indigo-400'
               : 'border-transparent text-slate-400 hover:text-slate-600 dark:hover:text-slate-200'
@@ -270,7 +270,7 @@ export const AcademicsPage: React.FC = () => {
         >
           <BookOpen className="w-4 h-4" />
           <span>{t('academics.subjectsTab', 'Subjects')}</span>
-          <span className="px-2 py-0.5 rounded-full text-xs bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+          <span className="px-2 py-0.5 rounded-full text-[11px] bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
             {subjects.length}
           </span>
         </button>

@@ -36,14 +36,14 @@ export const StudentsPage: React.FC = () => {
     : [];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
             {t('students.title')}
           </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1">
             {t('students.subtitle')}
           </p>
         </div>
@@ -51,7 +51,7 @@ export const StudentsPage: React.FC = () => {
         {canCreateStudent && (
           <button
             onClick={() => setIsCreateModalOpen(true)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold text-sm shadow-lg shadow-indigo-600/25 transition duration-150 transform active:scale-95 shrink-0"
+            className="flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 rounded-2xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-700 hover:to-violet-700 text-white font-bold text-xs sm:text-sm shadow-lg shadow-indigo-600/25 transition duration-150 transform active:scale-95 w-full sm:w-auto"
           >
             <UserPlus className="w-4 h-4" />
             <span>{t('students.addStudent')}</span>
@@ -60,23 +60,23 @@ export const StudentsPage: React.FC = () => {
       </div>
 
       {/* Filter / Search Bar */}
-      <div className="bg-white dark:bg-slate-900 p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs flex items-center justify-between gap-4">
-        <div className="relative flex-1 max-w-md">
+      <div className="bg-white dark:bg-slate-900 p-3 sm:p-4 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-4">
+        <div className="relative flex-1 w-full sm:max-w-md">
           <Search className="w-4 h-4 text-slate-400 absolute top-3 left-3.5 rtl:right-3.5 rtl:left-auto" />
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder={t('students.searchPlaceholder')}
-            className="w-full pl-10 pr-4 rtl:pr-10 rtl:pl-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+            className="w-full pl-10 pr-4 rtl:pr-10 rtl:pl-4 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
           />
         </div>
-        <span className="text-xs font-semibold text-slate-500">
+        <span className="text-xs font-semibold text-slate-500 self-end sm:self-auto">
           {studentList.length} {t('students.fullName')}
         </span>
       </div>
 
-      {/* Students Data Table */}
+      {/* Students Data: Mobile Cards (<md) & Desktop Table (>=md) */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden">
         {isLoading ? (
           <div className="py-16 text-center text-sm text-slate-400">
@@ -87,92 +87,159 @@ export const StudentsPage: React.FC = () => {
             {t('students.noStudents')}
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left rtl:text-right text-sm">
-              <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800">
-                <tr>
-                  <th className="px-6 py-4">{t('students.fullName')}</th>
-                  <th className="px-6 py-4">{t('students.section')}</th>
-                  <th className="px-6 py-4">{t('students.nationalId')}</th>
-                  <th className="px-6 py-4">{t('students.phone')}</th>
-                  <th className="px-6 py-4">{t('students.guardians')}</th>
-                  <th className="px-6 py-4 text-center">{t('common.actions')}</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
-                {studentList.map((student: any) => (
-                  <tr
-                    key={student.id}
-                    className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition"
-                  >
-                    <td className="px-6 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-9 h-9 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">
-                          {student.first_name?.[0] || 'S'}
-                        </div>
-                        <div>
-                          <p className="font-bold text-slate-900 dark:text-white">
-                            {student.full_name}
-                          </p>
-                          <p className="text-xs text-slate-400">{student.email || student.username}</p>
-                        </div>
+          <>
+            {/* MOBILE CARD VIEW (Phones & Small Tablets) */}
+            <div className="md:hidden divide-y divide-slate-100 dark:divide-slate-800">
+              {studentList.map((student: any) => (
+                <div key={student.id} className="p-3.5 space-y-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-indigo-600 to-violet-600 text-white flex items-center justify-center font-bold text-sm shrink-0 shadow-xs">
+                        {student.first_name?.[0] || 'S'}
                       </div>
-                    </td>
-                    <td className="px-6 py-4">
-                      {student.current_section ? (
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
-                          {student.current_section.class_level} - {student.current_section.name}
-                        </span>
+                      <div className="min-w-0">
+                        <p className="font-bold text-slate-900 dark:text-white text-sm truncate">
+                          {student.full_name}
+                        </p>
+                        <p className="text-[11px] text-slate-400 truncate">
+                          {student.email || student.username}
+                        </p>
+                      </div>
+                    </div>
+                    {student.current_section && (
+                      <span className="shrink-0 inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                        {student.current_section.class_level} - {student.current_section.name}
+                      </span>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 text-xs bg-slate-50 dark:bg-slate-800/40 p-2.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                    <div>
+                      <span className="text-[10px] text-slate-400 font-semibold block">{t('students.nationalId')}</span>
+                      <span className="font-mono text-[11px] text-slate-700 dark:text-slate-300 truncate block">
+                        {student.national_id || '—'}
+                      </span>
+                    </div>
+                    <div>
+                      <span className="text-[10px] text-slate-400 font-semibold block">{t('students.phone')}</span>
+                      {student.phone_number ? (
+                        <a
+                          href={`tel:${student.phone_number}`}
+                          className="text-[11px] text-indigo-600 dark:text-indigo-400 font-semibold hover:underline truncate block"
+                        >
+                          {student.phone_number}
+                        </a>
                       ) : (
-                        <span className="text-xs text-slate-400">Not Assigned</span>
+                        <span className="text-[11px] text-slate-400">—</span>
                       )}
-                    </td>
-                    <td className="px-6 py-4 font-mono text-xs text-slate-600 dark:text-slate-300">
-                      {student.national_id || '—'}
-                    </td>
-                    <td className="px-6 py-4 text-xs text-slate-600 dark:text-slate-300">
-                      {student.phone_number || '—'}
-                    </td>
-                    <td className="px-6 py-4">
-                      {student.guardians?.length > 0 ? (
-                        <div className="flex flex-col gap-0.5">
-                          {student.guardians.map((g: any) => (
-                            <span key={g.id} className="text-xs font-semibold text-slate-700 dark:text-slate-300">
-                              {g.name}
-                            </span>
-                          ))}
-                        </div>
-                      ) : (
-                        <span className="text-xs text-slate-400">No guardian linked</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 text-center">
-                      <button
-                        onClick={() => setSelectedStudent(student)}
-                        className="px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-slate-50 transition"
-                      >
-                        {t('dashboard.viewAll')}
-                      </button>
-                    </td>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-1">
+                    <span className="text-[11px] text-slate-400 truncate max-w-[180px]">
+                      {student.guardians?.length > 0
+                        ? `${student.guardians[0].name}${student.guardians.length > 1 ? ` (+${student.guardians.length - 1})` : ''}`
+                        : 'No guardian linked'}
+                    </span>
+                    <button
+                      onClick={() => setSelectedStudent(student)}
+                      className="px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-slate-50 active:scale-95 transition shadow-2xs"
+                    >
+                      {t('dashboard.viewAll')}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* DESKTOP TABLE VIEW (Tablets & Desktops) */}
+            <div className="hidden md:block overflow-x-auto">
+              <table className="w-full text-left rtl:text-right text-sm">
+                <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 dark:text-slate-400 text-xs font-bold uppercase tracking-wider border-b border-slate-200/80 dark:border-slate-800">
+                  <tr>
+                    <th className="px-6 py-4">{t('students.fullName')}</th>
+                    <th className="px-6 py-4">{t('students.section')}</th>
+                    <th className="px-6 py-4">{t('students.nationalId')}</th>
+                    <th className="px-6 py-4">{t('students.phone')}</th>
+                    <th className="px-6 py-4">{t('students.guardians')}</th>
+                    <th className="px-6 py-4 text-center">{t('common.actions')}</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+                </thead>
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                  {studentList.map((student: any) => (
+                    <tr
+                      key={student.id}
+                      className="hover:bg-slate-50/80 dark:hover:bg-slate-800/40 transition"
+                    >
+                      <td className="px-6 py-4">
+                        <div className="flex items-center gap-3">
+                          <div className="w-9 h-9 rounded-full bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 flex items-center justify-center font-bold text-xs shrink-0">
+                            {student.first_name?.[0] || 'S'}
+                          </div>
+                          <div>
+                            <p className="font-bold text-slate-900 dark:text-white">
+                              {student.full_name}
+                            </p>
+                            <p className="text-xs text-slate-400">{student.email || student.username}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4">
+                        {student.current_section ? (
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950/60 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
+                            {student.current_section.class_level} - {student.current_section.name}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-slate-400">Not Assigned</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 font-mono text-xs text-slate-600 dark:text-slate-300">
+                        {student.national_id || '—'}
+                      </td>
+                      <td className="px-6 py-4 text-xs text-slate-600 dark:text-slate-300">
+                        {student.phone_number || '—'}
+                      </td>
+                      <td className="px-6 py-4">
+                        {student.guardians?.length > 0 ? (
+                          <div className="flex flex-col gap-0.5">
+                            {student.guardians.map((g: any) => (
+                              <span key={g.id} className="text-xs font-semibold text-slate-700 dark:text-slate-300">
+                                {g.name}
+                              </span>
+                            ))}
+                          </div>
+                        ) : (
+                          <span className="text-xs text-slate-400">No guardian linked</span>
+                        )}
+                      </td>
+                      <td className="px-6 py-4 text-center">
+                        <button
+                          onClick={() => setSelectedStudent(student)}
+                          className="px-3 py-1 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-xs font-semibold text-indigo-600 dark:text-indigo-400 hover:bg-slate-50 transition"
+                        >
+                          {t('dashboard.viewAll')}
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
         )}
       </div>
 
       {/* Student Profile Detail Modal */}
       {selectedStudent && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-lg w-full p-6 space-y-5 animate-in fade-in duration-200">
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100 dark:border-slate-800">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-lg w-full p-4 sm:p-6 space-y-4 sm:space-y-5 animate-in fade-in duration-200 max-h-[90vh] overflow-y-auto">
+            <div className="flex items-center justify-between pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 flex items-center justify-center font-bold text-lg">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 flex items-center justify-center font-bold text-base sm:text-lg">
                   {selectedStudent.first_name?.[0]}
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg text-slate-900 dark:text-white">
+                  <h3 className="font-bold text-base sm:text-lg text-slate-900 dark:text-white">
                     {selectedStudent.full_name}
                   </h3>
                   <p className="text-xs text-slate-400">ID #{selectedStudent.id}</p>
@@ -180,13 +247,13 @@ export const StudentsPage: React.FC = () => {
               </div>
               <button
                 onClick={() => setSelectedStudent(null)}
-                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-sm font-bold p-1"
+                className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-sm font-bold p-1.5 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800"
               >
                 ✕
               </button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 text-xs">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4 text-xs">
               <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800/60">
                 <span className="text-slate-400 uppercase font-semibold">{t('students.gender')}</span>
                 <p className="font-bold text-slate-800 dark:text-slate-200 mt-0.5">{selectedStudent.gender || 'N/A'}</p>
@@ -218,7 +285,7 @@ export const StudentsPage: React.FC = () => {
             <div className="pt-2 flex justify-end">
               <button
                 onClick={() => setSelectedStudent(null)}
-                className="px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-xs font-semibold transition"
+                className="w-full sm:w-auto px-4 py-2 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-xs font-semibold transition active:scale-95"
               >
                 {t('common.close')}
               </button>

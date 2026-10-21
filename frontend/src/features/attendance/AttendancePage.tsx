@@ -103,7 +103,7 @@ export const AttendancePage: React.FC = () => {
       </div>
 
       {/* Select Controls Card */}
-      <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs grid grid-cols-1 md:grid-cols-3 gap-4">
+      <div className="bg-white dark:bg-slate-900 p-3.5 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
         <div>
           <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
             {t('attendance.date')}
@@ -112,18 +112,18 @@ export const AttendancePage: React.FC = () => {
             type="date"
             value={selectedDate}
             onChange={(e) => setSelectedDate(e.target.value)}
-            className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
         </div>
 
-        <div className="md:col-span-2">
+        <div className="sm:col-span-2">
           <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5">
             {t('attendance.selectTimetable')}
           </label>
           <select
             value={selectedTimetableId}
             onChange={(e) => setSelectedTimetableId(e.target.value ? Number(e.target.value) : '')}
-            className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 truncate"
           >
             <option value="">-- Choose scheduled lesson --</option>
             {timetables?.map((tt: any) => (
@@ -137,29 +137,29 @@ export const AttendancePage: React.FC = () => {
 
       {/* Roster Sheet */}
       {selectedTimetable && enrollments && (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden space-y-4 p-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
+        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden space-y-4 p-3.5 sm:p-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-slate-100 dark:border-slate-800">
             <div>
-              <h3 className="font-extrabold text-base text-slate-900 dark:text-white">
+              <h3 className="font-extrabold text-sm sm:text-base text-slate-900 dark:text-white">
                 {selectedTimetable.subject_name} — {selectedTimetable.section_name}
               </h3>
-              <p className="text-xs text-slate-400 mt-0.5">
+              <p className="text-[11px] sm:text-xs text-slate-400 mt-0.5">
                 {enrollments.length} Enrolled Students • {selectedDate}
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 self-start sm:self-auto">
               <button
                 type="button"
                 onClick={() => markAll('Present')}
-                className="px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-100 transition"
+                className="px-3 py-1.5 rounded-xl border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 text-xs font-bold hover:bg-emerald-100 transition active:scale-95"
               >
                 {t('attendance.bulkMarkPresent')}
               </button>
             </div>
           </div>
 
-          <div className="overflow-x-auto">
-            <table className="w-full text-left rtl:text-right text-sm">
+          <div className="overflow-x-auto -mx-3.5 sm:mx-0 px-3.5 sm:px-0">
+            <table className="w-full text-left rtl:text-right text-sm min-w-[560px]">
               <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 text-xs font-bold uppercase tracking-wider">
                 <tr>
                   <th className="px-4 py-3">{t('students.fullName')}</th>
@@ -175,15 +175,15 @@ export const AttendancePage: React.FC = () => {
                   const currentStatus = statusMap[enr.student] || 'Present';
                   return (
                     <tr key={enr.id} className="hover:bg-slate-50/60 transition">
-                      <td className="px-4 py-3.5 font-bold text-slate-800 dark:text-slate-100">
+                      <td className="px-4 py-3 font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-100">
                         {enr.student_name}
                       </td>
                       {['Present', 'Absent', 'Late', 'Excused'].map((statusOption) => (
-                        <td key={statusOption} className="px-4 py-3.5 text-center">
+                        <td key={statusOption} className="px-2 sm:px-4 py-3 text-center">
                           <button
                             type="button"
                             onClick={() => setStatusMap({ ...statusMap, [enr.student]: statusOption })}
-                            className={`w-7 h-7 rounded-lg text-xs font-bold inline-flex items-center justify-center transition ${
+                            className={`w-8 h-8 rounded-xl text-xs font-bold inline-flex items-center justify-center transition active:scale-90 ${
                               currentStatus === statusOption
                                 ? statusOption === 'Present'
                                   ? 'bg-emerald-600 text-white shadow-xs'
@@ -194,12 +194,13 @@ export const AttendancePage: React.FC = () => {
                                   : 'bg-indigo-600 text-white shadow-xs'
                                 : 'bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600'
                             }`}
+                            title={statusOption}
                           >
                             {statusOption[0]}
                           </button>
                         </td>
                       ))}
-                      <td className="px-4 py-3.5">
+                      <td className="px-4 py-3">
                         <input
                           type="text"
                           value={remarksMap[enr.student] || ''}
@@ -215,23 +216,21 @@ export const AttendancePage: React.FC = () => {
             </table>
           </div>
 
-          <div className="pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
-            {saveSuccess && (
+          <div className="pt-3 sm:pt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800">
+            {saveSuccess ? (
               <span className="text-xs font-bold text-emerald-600 flex items-center gap-1.5">
                 <Check className="w-4 h-4" />
                 {t('common.success')}
               </span>
-            )}
-            <div className="ml-auto rtl:mr-auto rtl:ml-0">
-              <button
-                type="button"
-                onClick={() => saveMutation.mutate()}
-                disabled={saveMutation.isPending}
-                className="px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/30 transition disabled:opacity-50"
-              >
-                {saveMutation.isPending ? t('common.loading') : t('attendance.saveAttendance')}
-              </button>
-            </div>
+            ) : <div />}
+            <button
+              type="button"
+              onClick={() => saveMutation.mutate()}
+              disabled={saveMutation.isPending}
+              className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs shadow-md shadow-indigo-600/30 transition active:scale-95 disabled:opacity-50"
+            >
+              {saveMutation.isPending ? t('common.loading') : t('attendance.saveAttendance')}
+            </button>
           </div>
         </div>
       )}

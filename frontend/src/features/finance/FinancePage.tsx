@@ -61,34 +61,34 @@ export const FinancePage: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
           {t('finance.title')}
         </h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1">
           {t('finance.subtitle')}
         </p>
       </div>
 
       {/* Summary KPI Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
-          <span className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('dashboard.totalInvoiced')}</span>
-          <p className="text-2xl font-black text-slate-900 dark:text-white mt-1">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 sm:gap-4">
+        <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
+          <span className="text-[11px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider">{t('dashboard.totalInvoiced')}</span>
+          <p className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-1">
             ${(summary?.total_invoiced || 0).toLocaleString()}
           </p>
         </div>
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
-          <span className="text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">{t('dashboard.totalCollected')}</span>
-          <p className="text-2xl font-black text-emerald-600 mt-1">
+        <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
+          <span className="text-[11px] sm:text-xs font-semibold text-emerald-600 dark:text-emerald-400 uppercase tracking-wider">{t('dashboard.totalCollected')}</span>
+          <p className="text-xl sm:text-2xl font-black text-emerald-600 mt-1">
             ${(summary?.total_collected || 0).toLocaleString()}
           </p>
         </div>
-        <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
-          <span className="text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">{t('dashboard.outstandingBalance')}</span>
-          <p className="text-2xl font-black text-amber-600 mt-1">
+        <div className="bg-white dark:bg-slate-900 p-4 sm:p-5 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs">
+          <span className="text-[11px] sm:text-xs font-semibold text-amber-600 dark:text-amber-400 uppercase tracking-wider">{t('dashboard.outstandingBalance')}</span>
+          <p className="text-xl sm:text-2xl font-black text-amber-600 mt-1">
             ${(summary?.outstanding_balance || 0).toLocaleString()}
           </p>
         </div>
@@ -96,8 +96,8 @@ export const FinancePage: React.FC = () => {
 
       {/* Invoices Table */}
       <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 shadow-xs overflow-hidden">
-        <div className="p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
-          <h3 className="font-extrabold text-sm text-slate-800 dark:text-slate-100">
+        <div className="p-3.5 sm:p-4 border-b border-slate-100 dark:border-slate-800 flex items-center justify-between">
+          <h3 className="font-extrabold text-xs sm:text-sm text-slate-800 dark:text-slate-100">
             Student Billing Ledger
           </h3>
         </div>
@@ -105,41 +105,41 @@ export const FinancePage: React.FC = () => {
           <div className="py-12 text-center text-sm text-slate-400">{t('common.loading')}</div>
         ) : (
           <div className="overflow-x-auto">
-            <table className="w-full text-left rtl:text-right text-sm">
+            <table className="w-full text-left rtl:text-right text-sm min-w-[620px]">
               <thead className="bg-slate-50 dark:bg-slate-800/60 text-slate-500 text-xs font-bold uppercase tracking-wider">
                 <tr>
-                  <th className="px-6 py-3.5">{t('finance.invoiceNumber')}</th>
-                  <th className="px-6 py-3.5">{t('students.fullName')}</th>
-                  <th className="px-6 py-3.5">Fee Category</th>
-                  <th className="px-6 py-3.5">{t('finance.amountDue')}</th>
-                  <th className="px-6 py-3.5">{t('finance.paid')}</th>
-                  <th className="px-6 py-3.5">{t('finance.balance')}</th>
-                  <th className="px-6 py-3.5">{t('students.status')}</th>
-                  <th className="px-6 py-3.5 text-center">{t('common.actions')}</th>
+                  <th className="px-4 sm:px-6 py-3.5">{t('finance.invoiceNumber')}</th>
+                  <th className="px-4 sm:px-6 py-3.5">{t('students.fullName')}</th>
+                  <th className="px-4 sm:px-6 py-3.5">Fee Category</th>
+                  <th className="px-4 sm:px-6 py-3.5">{t('finance.amountDue')}</th>
+                  <th className="px-4 sm:px-6 py-3.5">{t('finance.paid')}</th>
+                  <th className="px-4 sm:px-6 py-3.5">{t('finance.balance')}</th>
+                  <th className="px-4 sm:px-6 py-3.5">{t('students.status')}</th>
+                  <th className="px-4 sm:px-6 py-3.5 text-center">{t('common.actions')}</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
                 {invoices?.map((inv: any) => (
                   <tr key={inv.id} className="hover:bg-slate-50/60 transition">
-                    <td className="px-6 py-4 font-mono text-xs font-bold text-slate-600 dark:text-slate-300">
+                    <td className="px-4 sm:px-6 py-4 font-mono text-xs font-bold text-slate-600 dark:text-slate-300">
                       INV-{inv.id.toString().padStart(5, '0')}
                     </td>
-                    <td className="px-6 py-4 font-bold text-slate-800 dark:text-slate-100">
+                    <td className="px-4 sm:px-6 py-4 font-bold text-xs sm:text-sm text-slate-800 dark:text-slate-100">
                       {inv.student_name}
                     </td>
-                    <td className="px-6 py-4 text-xs text-slate-500">
+                    <td className="px-4 sm:px-6 py-4 text-xs text-slate-500">
                       {inv.fee_type_name}
                     </td>
-                    <td className="px-6 py-4 font-bold text-slate-900 dark:text-white">
+                    <td className="px-4 sm:px-6 py-4 font-bold text-xs sm:text-sm text-slate-900 dark:text-white">
                       ${inv.amount_due?.toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 text-xs font-semibold text-emerald-600">
+                    <td className="px-4 sm:px-6 py-4 text-xs font-semibold text-emerald-600">
                       ${inv.total_paid?.toLocaleString()}
                     </td>
-                    <td className="px-6 py-4 font-bold text-xs text-slate-800 dark:text-slate-200">
+                    <td className="px-4 sm:px-6 py-4 font-bold text-xs text-slate-800 dark:text-slate-200">
                       ${inv.balance_remaining?.toLocaleString()}
                     </td>
-                    <td className="px-6 py-4">
+                    <td className="px-4 sm:px-6 py-4">
                       <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
                         inv.status === 'PAID' ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300' :
                         inv.status === 'PARTIAL' ? 'bg-amber-100 text-amber-800 dark:bg-amber-950/60 dark:text-amber-300' :
@@ -148,11 +148,11 @@ export const FinancePage: React.FC = () => {
                         {inv.status}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-center">
+                    <td className="px-4 sm:px-6 py-4 text-center">
                       {inv.balance_remaining > 0 ? (
                         <button
                           onClick={() => openPaymentModal(inv)}
-                          className="px-3 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition"
+                          className="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold transition active:scale-95 shadow-xs"
                         >
                           {t('finance.recordPayment')}
                         </button>
@@ -172,8 +172,8 @@ export const FinancePage: React.FC = () => {
 
       {/* Payment Collection Modal */}
       {paymentModalOpen && selectedInvoice && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full p-6 space-y-4">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl shadow-2xl border border-slate-200 dark:border-slate-800 max-w-md w-full p-4 sm:p-6 space-y-3.5 sm:space-y-4 max-h-[92vh] overflow-y-auto">
             <h3 className="font-extrabold text-base text-slate-900 dark:text-white pb-3 border-b border-slate-100 dark:border-slate-800">
               {t('finance.recordPayment')}
             </h3>

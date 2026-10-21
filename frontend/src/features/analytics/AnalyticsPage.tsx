@@ -31,22 +31,22 @@ export const AnalyticsPage: React.FC = () => {
   const urgentCount = notes.filter((n: any) => n.requires_intervention).length;
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2.5">
-            <BrainCircuit className="w-7 h-7 text-indigo-600 dark:text-indigo-400" />
-            {t('analytics.title')}
+          <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight flex items-center gap-2 sm:gap-2.5">
+            <BrainCircuit className="w-6 h-6 sm:w-7 sm:h-7 text-indigo-600 dark:text-indigo-400 shrink-0" />
+            <span>{t('analytics.title')}</span>
           </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1">
             {t('analytics.subtitle')}
           </p>
         </div>
         <button
           onClick={() => scanMutation.mutate()}
           disabled={scanMutation.isPending}
-          className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 transition disabled:opacity-50"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs shadow-lg shadow-indigo-600/30 transition active:scale-95 disabled:opacity-50 w-full sm:w-auto"
         >
           <Sparkles className="w-4 h-4" />
           <span>
@@ -56,30 +56,30 @@ export const AnalyticsPage: React.FC = () => {
       </div>
 
       {/* Summary Alert Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div className="p-5 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-rose-100 dark:bg-rose-900/60 text-rose-600 flex items-center justify-center shrink-0">
-            <AlertTriangle className="w-6 h-6" />
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:gap-4">
+        <div className="p-3.5 sm:p-5 rounded-2xl bg-rose-50 dark:bg-rose-950/30 border border-rose-200 dark:border-rose-900 flex items-center gap-3 sm:gap-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-rose-100 dark:bg-rose-900/60 text-rose-600 flex items-center justify-center shrink-0">
+            <AlertTriangle className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-rose-600 dark:text-rose-300 uppercase tracking-wider">
+            <p className="text-[10px] sm:text-xs font-semibold text-rose-600 dark:text-rose-300 uppercase tracking-wider">
               {t('analytics.interventionRequired')}
             </p>
-            <p className="text-2xl font-black text-rose-900 dark:text-rose-100 mt-0.5">
+            <p className="text-xl sm:text-2xl font-black text-rose-900 dark:text-rose-100 mt-0.5">
               {urgentCount} Students
             </p>
           </div>
         </div>
 
-        <div className="p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 flex items-center gap-4">
-          <div className="w-12 h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-600 flex items-center justify-center shrink-0">
-            <CheckCircle className="w-6 h-6" />
+        <div className="p-3.5 sm:p-5 rounded-2xl bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 flex items-center gap-3 sm:gap-4">
+          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-emerald-100 dark:bg-emerald-900/60 text-emerald-600 flex items-center justify-center shrink-0">
+            <CheckCircle className="w-5 h-5 sm:w-6 sm:h-6" />
           </div>
           <div>
-            <p className="text-xs font-semibold text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">
+            <p className="text-[10px] sm:text-xs font-semibold text-emerald-600 dark:text-emerald-300 uppercase tracking-wider">
               {t('analytics.onTrack')}
             </p>
-            <p className="text-2xl font-black text-emerald-900 dark:text-emerald-100 mt-0.5">
+            <p className="text-xl sm:text-2xl font-black text-emerald-900 dark:text-emerald-100 mt-0.5">
               {(notes?.length || 0) - urgentCount} Students
             </p>
           </div>
@@ -87,18 +87,18 @@ export const AnalyticsPage: React.FC = () => {
       </div>
 
       {/* Diagnostic Cards List */}
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {isLoading ? (
           <div className="py-16 text-center text-sm text-slate-400">{t('common.loading')}</div>
         ) : notes?.length === 0 ? (
-          <div className="py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center text-sm text-slate-400">
+          <div className="py-12 sm:py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center text-xs sm:text-sm text-slate-400">
             No diagnostic notes generated yet. Click "Run Smart Diagnostic Scan" above to analyze.
           </div>
         ) : (
           notes.map((note: any) => (
             <div
               key={note.id}
-              className={`p-6 rounded-2xl border transition shadow-xs ${
+              className={`p-4 sm:p-6 rounded-2xl border transition shadow-xs ${
                 note.requires_intervention
                   ? 'bg-rose-50/40 dark:bg-rose-950/20 border-rose-200/80 dark:border-rose-900/50'
                   : 'bg-white dark:bg-slate-900 border-slate-200/80 dark:border-slate-800'

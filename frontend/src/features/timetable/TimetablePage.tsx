@@ -21,24 +21,24 @@ export const TimetablePage: React.FC = () => {
   });
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       {/* Header */}
       <div>
-        <h2 className="text-2xl font-black text-slate-900 dark:text-white tracking-tight">
+        <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
           {t('timetable.title')}
         </h2>
-        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+        <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-0.5 sm:mt-1">
           {t('timetable.subtitle')}
         </p>
       </div>
 
-      {/* Days Filter Buttons */}
-      <div className="flex flex-wrap gap-2">
+      {/* Days Filter Buttons - Scrollable on mobile */}
+      <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1 -mx-1 px-1">
         {days.map((day) => (
           <button
             key={day}
             onClick={() => setSelectedDay(day)}
-            className={`px-4 py-2 rounded-xl text-xs font-bold transition shadow-xs ${
+            className={`px-3.5 sm:px-4 py-2 rounded-xl text-xs font-bold transition shadow-2xs shrink-0 active:scale-95 ${
               selectedDay === day
                 ? 'bg-indigo-600 text-white shadow-md shadow-indigo-600/30'
                 : 'bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-slate-50'
@@ -50,11 +50,11 @@ export const TimetablePage: React.FC = () => {
       </div>
 
       {/* Timetable Grid */}
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         {isLoading ? (
           <div className="py-16 text-center text-sm text-slate-400">{t('common.loading')}</div>
         ) : timetables?.length === 0 ? (
-          <div className="py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center text-sm text-slate-400">
+          <div className="py-12 sm:py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200/80 dark:border-slate-800 text-center text-xs sm:text-sm text-slate-400">
             No scheduled classes for {selectedDay}.
           </div>
         ) : (
