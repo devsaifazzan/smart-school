@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import {
   LayoutDashboard,
   Users,
+  UserCheck,
   CheckCircle2,
   Calendar,
   Grid,
@@ -21,6 +22,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({ onOpenMenu }) => {
   const primaryItems = [
     { to: '/dashboard', label: t('nav.dashboard'), icon: LayoutDashboard, resource: 'dashboard' },
     { to: '/students', label: t('nav.students'), icon: Users, resource: 'students' },
+    { to: '/teachers', label: t('nav.teachers', 'Teachers'), icon: UserCheck, resource: 'teachers' },
     { to: '/attendance', label: t('nav.attendance'), icon: CheckCircle2, resource: 'attendance' },
     { to: '/timetable', label: t('nav.timetable'), icon: Calendar, resource: 'timetable' },
   ].filter((item) => hasPermission(item.resource, 'read'));

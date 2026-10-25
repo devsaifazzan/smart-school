@@ -38,7 +38,14 @@ class TeacherProfile(models.Model):
     )
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
-    hire_date = models.DateField(default=timezone.now)
+    hire_date = models.DateField(default=timezone.localdate)
+    gender = models.CharField(max_length=20, null=True, blank=True)
+    national_id = models.CharField(max_length=50, null=True, blank=True)
+    phone_number = models.CharField(max_length=30, null=True, blank=True)
+    specialization = models.CharField(max_length=150, null=True, blank=True)
+    employment_status = models.CharField(max_length=50, default='active', blank=True)
+    qualification = models.CharField(max_length=150, null=True, blank=True)
+    years_of_experience = models.IntegerField(default=0, null=True, blank=True)
 
     class Meta:
         db_table = 'teacher_profiles'

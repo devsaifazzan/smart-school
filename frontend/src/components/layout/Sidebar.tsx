@@ -5,6 +5,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import {
   LayoutDashboard,
   Users,
+  UserCheck,
   GraduationCap,
   Calendar,
   CheckCircle2,
@@ -39,6 +40,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   const allNavItems = [
     { to: '/dashboard', label: t('nav.dashboard'), icon: LayoutDashboard, resource: 'dashboard' },
     { to: '/students', label: t('nav.students'), icon: Users, resource: 'students' },
+    { to: '/teachers', label: t('nav.teachers', 'Faculty & Teachers'), icon: UserCheck, resource: 'teachers' },
     { to: '/academics', label: t('nav.academics'), icon: GraduationCap, resource: 'academics' },
     { to: '/timetable', label: t('nav.timetable'), icon: Calendar, resource: 'timetable' },
     { to: '/attendance', label: t('nav.attendance'), icon: CheckCircle2, resource: 'attendance' },

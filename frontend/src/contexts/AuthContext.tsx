@@ -138,6 +138,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       // Map resource name to url
       const routeMap: Record<string, string> = {
         students: '/students',
+        teachers: '/teachers',
         academics: '/academics',
         timetable: '/timetable',
         attendance: '/attendance',

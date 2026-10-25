@@ -124,14 +124,110 @@ class StudentProfileSerializer(serializers.ModelSerializer):
         ]
 
 
+class TeacherCreateSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(write_only=True, required=False, allow_blank=True)
+    password = serializers.CharField(write_only=True, required=False, allow_blank=True, style={'input_type': 'password'})
+    email = serializers.EmailField(write_only=True, required=False, allow_blank=True)
+
+    class Meta:
+        model = TeacherProfile
+        fields = [
+            'id', 'user', 'username', 'password', 'email',
+            'first_name', 'last_name', 'hire_date',
+            'gender', 'national_id', 'phone_number',
+            'specialization', 'employment_status',
+            'qualification', 'years_of_experience'
+        ]
+        read_only_fields = ['id', 'user']
+
+    def validate_email(self, value):
+        from apps.accounts.models import User
+        if value and User.objects.filter(email=value).exists():
+            raise serializers.ValidationError("A user with this email address already exists.")
+        return value
+
+    def create(self, validated_data):
+        from apps.accounts.models import Role, User
+        from django.db import transaction
+
+        username = validated_data.pop('username', None)
+        password = validated_data.pop('password', None)
+        email = validated_data.pop('email', '')
+
+        with transaction.atomic():
+            if not username:
+                base_username = f"teacher.{validated_data.get('first_name', 'staff')}.{validated_data.get('last_name', 'new')}".lower().replace(' ', '')
+                candidate = base_username
+                count = 1
+                while User.objects.filter(username=candidate).exists():
+                    candidate = f"{base_username}{count}"
+                    count += 1
+                username = candidate
+
+            if not password:
+                password = 'teacher123'
+
+            teacher_role = Role.objects.filter(name__iexact='teacher').first()
+            if not teacher_role:
+                teacher_role, _ = Role.objects.get_or_create(
+                    name='Teacher',
+                    defaults={'description': 'Teacher / Academic Staff'}
+                )
+
+            if not email:
+                candidate_email = f"{username}@school.edu"
+                c = 1
+                while User.objects.filter(email=candidate_email).exists():
+                    candidate_email = f"{username}{c}@school.edu"
+                    c += 1
+                email = candidate_email
+
+            user = User(
+                username=username,
+                email=email,
+                role=teacher_role,
+                is_active=True
+            )
+            user.set_password(password)
+            user.save()
+
+            teacher = TeacherProfile.objects.create(user=user, **validated_data)
+            teacher._generated_username = username
+            teacher._generated_password = password
+            return teacher
+
+    def to_representation(self, instance):
+        data = TeacherProfileSerializer(instance, context=self.context).data
+        if hasattr(instance, '_generated_username'):
+            data['credentials'] = {
+                'username': instance._generated_username,
+                'password': instance._generated_password,
+            }
+        return data
+
+
 class TeacherProfileSerializer(serializers.ModelSerializer):
     username = serializers.CharField(source='user.username', read_only=True)
     email = serializers.CharField(source='user.email', read_only=True)
     full_name = serializers.CharField(read_only=True)
+    is_active = serializers.BooleanField(source='user.is_active', read_only=True)
+    hire_date = serializers.SerializerMethodField()
 
     class Meta:
         model = TeacherProfile
-        fields = ['id', 'user', 'username', 'email', 'first_name', 'last_name', 'full_name', 'hire_date']
+        fields = [
+            'id', 'user', 'username', 'email', 'first_name', 'last_name', 'full_name',
+            'hire_date', 'gender', 'national_id', 'phone_number',
+            'specialization', 'employment_status', 'qualification', 'years_of_experience',
+            'is_active'
+        ]
+
+    def get_hire_date(self, obj):
+        if not obj.hire_date:
+            return None
+        if hasattr(obj.hire_date, 'strftime'):
+            return obj.hire_date.strftime('%Y-%m-%d')
+        return str(obj.hire_date)
 
 
 class ParentProfileSerializer(serializers.ModelSerializer):

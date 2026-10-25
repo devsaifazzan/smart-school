@@ -3,6 +3,7 @@ from .models import RolePermission
 
 STANDARD_RESOURCES = [
     'students',
+    'teachers',
     'academics',
     'timetable',
     'attendance',
@@ -40,7 +41,7 @@ def user_has_resource_permission(user, resource_name, action='read'):
     if role_name == 'teacher':
         if resource_name in ('exams', 'attendance', 'timetable'):
             return action in ('read', 'create', 'update')
-        if resource_name in ('students', 'academics'):
+        if resource_name in ('students', 'teachers', 'academics'):
             return action == 'read'
     elif role_name == 'student':
         if resource_name in ('exams', 'attendance', 'timetable', 'academics', 'finance'):

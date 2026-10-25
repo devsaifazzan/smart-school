@@ -6,6 +6,7 @@ import { DashboardLayout } from './components/layout/DashboardLayout';
 import { LoginPage } from './features/auth/LoginPage';
 import { DashboardPage } from './features/dashboard/DashboardPage';
 import { StudentsPage } from './features/students/StudentsPage';
+import { TeachersPage } from './features/teachers/TeachersPage';
 import { AcademicsPage } from './features/academics/AcademicsPage';
 import { TimetablePage } from './features/timetable/TimetablePage';
 import { AttendancePage } from './features/attendance/AttendancePage';
@@ -85,6 +86,14 @@ export const App: React.FC = () => {
                 element={
                   <PermissionRoute resource="students">
                     <StudentsPage />
+                  </PermissionRoute>
+                }
+              />
+              <Route
+                path="teachers"
+                element={
+                  <PermissionRoute resource="teachers">
+                    <TeachersPage />
                   </PermissionRoute>
                 }
               />

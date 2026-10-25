@@ -3,7 +3,7 @@ from apps.accounts.permissions import IsStaffOrReadOnly, ResourcePermission, use
 from .models import StudentProfile, TeacherProfile, ParentProfile, StudentParent
 from .serializers import (
     StudentProfileSerializer, StudentCreateSerializer, TeacherProfileSerializer,
-    ParentProfileSerializer, StudentParentSerializer
+    TeacherCreateSerializer, ParentProfileSerializer, StudentParentSerializer
 )
 
 
@@ -35,8 +35,14 @@ class StudentProfileViewSet(viewsets.ModelViewSet):
 class TeacherProfileViewSet(viewsets.ModelViewSet):
     queryset = TeacherProfile.objects.all().select_related('user')
     serializer_class = TeacherProfileSerializer
-    permission_classes = [IsStaffOrReadOnly]
-    search_fields = ['first_name', 'last_name', 'user__email']
+    resource_name = 'teachers'
+    permission_classes = [ResourcePermission]
+    search_fields = ['first_name', 'last_name', 'user__email', 'specialization', 'national_id', 'phone_number']
+
+    def get_serializer_class(self):
+        if self.action == 'create':
+            return TeacherCreateSerializer
+        return TeacherProfileSerializer
 
 
 class ParentProfileViewSet(viewsets.ModelViewSet):
